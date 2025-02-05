@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Language Tasks</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('Leonardo_Kino_XL_The_gentle_gradient_shifting_from_light_blue_2.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .task-container {
+            background: rgba(255, 255, 255, 0.8); /* Added transparency */
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        .task-buttons {
+            margin-bottom: 20px;
+        }
+        .task-buttons button {
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .about-us-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .about-us-btn:hover {
+            background-color: #0056b3;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 500px;
+            text-align: center;
+        }
+        .modal button {
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modal button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <button class="about-us-btn" onclick="openModal()">About Us</button>
+    
+    <h1>English Language Tasks</h1>
+    
+    <div class="task-buttons">
+        <button onclick="selectGrade(2)">2nd Grade</button>
+        <button onclick="selectGrade(3)">3rd Grade</button>
+        <button onclick="selectGrade(4)">4th Grade</button>
+        <button onclick="selectGrade(5)">5th Grade</button>
+        <button onclick="selectGrade(6)">6th Grade</button>
+        <button onclick="selectGrade(7)">7th Grade</button>
+        <button onclick="selectGrade(8)">8th Grade</button>
+        <button onclick="selectGrade(9)">9th Grade</button>
+        <button onclick="selectGrade(10)">10th Grade</button>
+        <button onclick="selectGrade(11)">11th Grade</button>
+    </div>
+
+    <div class="task-container">
+        <div class="task" id="task"></div>
+        <div class="form-group">
+            <label for="answer">Your Answer:</label>
+            <textarea id="answer" rows="4" style="width: 100%;"></textarea>
+        </div>
+        <button onclick="submitAnswer()">Submit Answer</button>
+    </div>
+
+    <!-- Modal -->
+    <div id="aboutUsModal" class="modal">
+        <div class="modal-content">
+            <h2>About Us</h2>
+            <p>Created by 9a grade students: Kirill Pestrikov, Anton Morozov. We are a team dedicated to creating educational tools and tasks to help students improve their English language skills. Our goal is to make learning fun and engaging.</p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        
+        const tasksByGrade = {
+            2: [
+            { task: "Translate 'dog' into Russian.", answer: "собака" },
+{ task: "Translate 'apple' into Russian.", answer: "яблоко" },
+ { task: "What is the color of the sky?", answer: "blue" },
+{ task: "How do you say 'hello' in English?", answer: "hello" },
+{ task: "Translate 'house' into Russian.", answer: "дом" },
+{ task: "What is the opposite of 'big'?", answer: "small" },
+{ task: "How many days are there in a week?", answer: "seven" },
+{ task: "Translate 'book' into Russian.", answer: "книга" },
+{ task: "What is the opposite of 'hot'?", answer: "cold" },
+{ task: "Translate 'friend' into Russian.", answer: "друг" },
+{ task: "What animal says 'meow'?", answer: "cat" },
+{ task: "What is the opposite of 'happy'?", answer: "sad" },
+{ task: "Translate 'car' into Russian.", answer: "машина" },
+{ task: "What color is grass?", answer: "green" },
+{ task: "What is the opposite of 'fast'?", answer: "slow" ,},
+            ],
+            3: [
+            { task: "What is the plural form of 'child'?", answer: "children" },
+{ task: "Translate 'sun' into Russian.", answer: "солнце" } ,
+{ task: "How do you say 'thank you' in English?", answer: "thank you" } ,
+{ task: "Translate 'bird' into Russian.", answer: "птица" } ,
+{ task: "What is the opposite of 'tall'?", answer: "short" } ,
+{ task: "What is the past form of 'go'?", answer: "went" } ,
+ { task: "Translate 'school' into Russian.", answer: "школа" } ,
+{ task: "How do you say 'goodbye' in English?", answer: "goodbye" } ,
+{ task: "Translate 'tree' into Russian.", answer: "дерево" } ,
+{ task: "What is the plural form of 'mouse'?", answer: "mice" } ,
+{ task: "Translate 'mother' into Russian.", answer: "мать" } ,
+{ task: "What is the opposite of 'young'?", answer: "old" } ,
+{ task: "Translate 'father' into Russian.", answer: "отец" },
+ { task: "How do you say 'please' in English?", answer: "please" } ,
+{ task: "What is the opposite of 'light'?", answer: "dark" },
+            ],
+            4: [
+            { task: "What is the past form of 'eat'?", answer: "ate" } ,
+{ task: "Translate 'beautiful' into Russian.", answer: "красивый" }, 
+{ task: "What is the plural form of 'foot'?", answer: "feet" } ,
+{ task: "Translate 'window' into Russian.", answer: "окно" } ,
+ { task: "What is the opposite of 'clean'?", answer: "dirty" } ,
+ { task: "What is the future form of 'do'?", answer: "will do" },
+  { task: "Translate 'computer' into Russian.", answer: "компьютер" } ,
+ { task: "What is the opposite of 'rich'?", answer: "poor" } ,
+ { task: "What is the past form of 'run'?", answer: "ran" } ,
+ { task: "Translate 'city' into Russian.", answer: "город" } ,
+ { task: "What is the plural form of 'knife'?", answer: "knives" }, 
+ { task: "Translate 'boy' into Russian.", answer: "мальчик" }, 
+ { task: "What is the opposite of 'soft'?", answer: "hard" }, 
+ { task: "What is the future form of 'have'?", answer: "will have" }, 
+ { task: "Translate 'schoolbag' into Russian.", answer: "школьный рюкзак" },
+            ],
+            5: [
+            { task: "Translate 'wonderful' into Russian.", answer: "замечательный" },
+  { task: "What is the comparative form of 'good'?", answer: "better" } ,
+ { task: "What is the opposite of 'empty'?", answer: "full" },
+  { task: "Translate 'restaurant' into Russian.", answer: "ресторан" } ,
+{ task: "What is the plural form of 'foot'?", answer: "feet" } ,
+{ task: "What is the past form of 'buy'?", answer: "bought" } ,
+ { task: "Translate 'question' into Russian.", answer: "вопрос" } ,
+ { task: "What is the opposite of 'cold'?", answer: "hot" } ,
+ { task: "What is the superlative form of 'fast'?", answer: "fastest" } ,
+{ task: "Translate 'mountain' into Russian.", answer: "гора" }, 
+{ task: "What is the past form of 'see'?", answer: "saw" } ,
+ { task: "Translate 'holiday' into Russian.", answer: "праздник" } ,
+ { task: "What is the opposite of 'love'?", answer: "hate" } ,
+ { task: "Translate 'family' into Russian.", answer: "семья" }, 
+{ task: "What is the comparative form of 'bad'?", answer: "worse" },
+            ],
+            6: [
+            { task: "What is the plural form of 'leaf'?", answer: "leaves" } ,
+ { task: "Translate 'impossible' into Russian.", answer: "невозможно" },
+  { task: "What is the future form of 'write'?", answer: "will write" } ,
+{ task: "Translate 'river' into Russian.", answer: "река" } ,
+{ task: "What is the past form of 'sing'?", answer: "sang" } ,
+{ task: "What is the opposite of 'begin'?", answer: "end" } ,
+ { task: "Translate 'journey' into Russian.", answer: "путешествие" } ,
+ { task: "What is the superlative form of 'good'?", answer: "best" } ,
+{ task: "What is the past form of 'take'?", answer: "took" } ,
+{ task: "Translate 'homework' into Russian.", answer: "домашнее задание" } ,
+ { task: "What is the opposite of 'wet'?", answer: "dry" } ,
+{ task: "What is the past form of 'read'?", answer: "read" } ,
+ { task: "Translate 'phone' into Russian.", answer: "телефон" } ,
+{ task: "What is the opposite of 'open'?", answer: "closed" } ,
+{ task: "What is the superlative form of 'big'?", answer: "biggest" },
+            ],
+            7: [
+            { task: "What is the past form of 'drive'?", answer: "drove" },
+  { task: "Translate 'important' into Russian.", answer: "важный" },
+ { task: "What is the plural form of 'child'?", answer: "children" }, 
+ { task: "Translate 'science' into Russian.", answer: "наука" }, 
+{ task: "What is the opposite of 'weak'?", answer: "strong" } ,
+ { task: "What is the past form of 'go'?", answer: "went" } ,
+ { task: "Translate 'unhappy' into Russian.", answer: "несчастный" },
+ { task: "What is the comparative form of 'far'?", answer: "farther" }, 
+ { task: "Translate 'country' into Russian.", answer: "страна" } ,
+ { task: "What is the opposite of 'quiet'?", answer: "loud" } ,
+ { task: "What is the past form of 'teach'?", answer: "taught" } ,
+ { task: "Translate 'unbelievable' into Russian.", answer: "невероятный" }, 
+ { task: "What is the comparative form of 'easy'?", answer: "easier" } ,
+ { task: "Translate 'television' into Russian.", answer: "телевизор" }, 
+ { task: "What is the superlative form of 'bad'?", answer: "worst" },
+            ],
+            8: [
+            { task: "What is the past form of 'speak'?", answer: "spoke" } ,
+ { task: "Translate 'environment' into Russian.", answer: "окружение" } ,
+ { task: "What is the future form of 'make'?", answer: "will make" } ,
+ { task: "Translate 'airport' into Russian.", answer: "аэропорт" } ,
+ { task: "What is the opposite of 'safe'?", answer: "dangerous" } ,
+ { task: "What is the past form of 'swim'?", answer: "swam" } ,
+{ task: "Translate 'weather' into Russian.", answer: "погода" } ,
+ { task: "What is the comparative form of 'high'?", answer: "higher" } , 
+{ task: "Translate 'unusual' into Russian.", answer: "необычный" } ,
+{ task: "What is the opposite of 'hard'?", answer: "soft" } ,
+{ task: "What is the past form of 'become'?", answer: "became" } ,
+ { task: "Translate 'restaurant' into Russian.", answer: "ресторан" } ,
+ { task: "What is the future form of 'run'?", answer: "will run" } ,
+ { task: "Translate 'adventure' into Russian.", answer: "приключение" } ,
+ { task: "What is the opposite of 'thin'?", answer: "thick" },
+            ],
+            9: [
+            { task: "Translate 'economic' into Russian.", answer: "экономический" } ,
+ { task: "What is the comparative form of 'important'?", answer: "more important" } ,
+ { task: "Translate 'artificial' into Russian.", answer: "искусственный" } ,
+ { task: "What is the opposite of 'civilized'?", answer: "primitive" } ,
+ { task: "What is the past form of 'understand'?", answer: "understood" } ,
+ { task: "Translate 'organization' into Russian.", answer: "организация" } ,
+ { task: "What is the comparative form of 'little'?", answer: "less" } ,
+ { task: "Translate 'economy' into Russian.", answer: "экономика" } ,
+ { task: "What is the opposite of 'rich'?", answer: "poor" } ,
+{ task: "What is the past form of 'write'?", answer: "wrote" } ,
+ { task: "Translate 'contract' into Russian.", answer: "контракт" } ,
+ { task: "What is the superlative form of 'smart'?", answer: "smartest" } ,
+ { task: "Translate 'increase' into Russian.", answer: "увеличить" } ,
+ { task: "What is the future form of 'speak'?", answer: "will speak" } ,
+ { task: "Translate 'success' into Russian.", answer: "успех" },
+
+            ],
+            10: [
+            { task: "Translate 'achievement' into Russian.", answer: "достижение" } ,
+ { task: "What is the comparative form of 'interesting'?", answer: "more interesting" } ,
+ { task: "What is the past form of 'lose'?", answer: "lost" } ,
+{ task: "Translate 'complex' into Russian.", answer: "сложный" } ,
+{ task: "What is the opposite of 'flexible'?", answer: "rigid" } ,
+ { task: "What is the past form of 'bring'?", answer: "brought" } ,
+ { task: "Translate 'transition' into Russian.", answer: "переход" } ,
+{ task: "What is the superlative form of 'heavy'?", answer: "heaviest" } ,
+ { task: "Translate 'perspective' into Russian.", answer: "перспектива" },
+ { task: "What is the comparative form of 'bad'?", answer: "worse" } ,
+ { task: "Translate 'theory' into Russian.", answer: "теория" } ,
+ { task: "What is the past form of 'see'?", answer: "saw" } ,
+ { task: "Translate 'necessary' into Russian.", answer: "необходимый" } ,
+ { task: "What is the opposite of 'secure'?", answer: "insecure" },
+ { task: "What is the future form of 'understand'?", answer: "will understand" },
+
+            ],
+            11: [
+            { task: "Translate 'philosophy' into Russian.", answer: "философия" } ,
+ { task: "What is the comparative form of 'attractive'?", answer: "more attractive" } ,
+ { task: "Translate 'intervention' into Russian.", answer: "вмешательство" }, 
+ { task: "What is the opposite of 'conservative'?", answer: "liberal" } ,
+ { task: "What is the past form of 'prove'?", answer: "proved" } ,
+ { task: "Translate 'consequence' into Russian.", answer: "последствие" } ,
+{ task: "What is the comparative form of 'dynamic'?", answer: "more dynamic" } ,
+{ task: "Translate 'transformation' into Russian.", answer: "трансформация" } ,
+{ task: "What is the opposite of 'sophisticated'?", answer: "unsophisticated" } ,
+ { task: "What is the future form of 'research'?", answer: "will research" } ,
+ { task: "Translate 'evaluation' into Russian.", answer: "оценка" } ,
+ { task: "What is the superlative form of 'complex'?", answer: "most complex" } ,
+ { task: "Translate 'influence' into Russian.", answer: "влияние" } ,
+ { task: "What is the past form of 'maintain'?", answer: "maintained" } ,
+ { task: "Translate 'innovation' into Russian.", answer: "инновация" } ,
+ { task: "What is the opposite of 'abstract'?", answer: "concrete" } ,
+ { task: "Translate 'persuade' into Russian.", answer: "убеждать" } ,
+ { task: "What is the future form of 'create'?", answer: "will create" } ,
+ { task: "Translate 'accountability' into Russian.", answer: "ответственность" } ,
+ { task: "What is the comparative form of 'unique'?", answer: "more unique" } ,
+ { task: "Translate 'intelligence' into Russian.", answer: "интеллект" } ,
+ { task: "What is the past form of 'think'?", answer: "thought" } ,
+{ task: "Translate 'compromise' into Russian.", answer: "компромисс" } ,
+ { task: "What is the opposite of 'authentic'?", answer: "inauthentic" } ,
+{ task: "Translate 'criticism' into Russian.", answer: "критика" } ,
+ { task: "What is the future form of 'respond'?", answer: "will respond" } ,
+ { task: "Translate 'reliable' into Russian.", answer: "надежный" } ,
+ { task: "What is the superlative form of 'efficient'?", answer: "most efficient" } ,
+ { task: "Translate 'evolution' into Russian.", answer: "эволюция" } ,
+ { task: "What is the past form of 'develop'?", answer: "developed" } ,
+            ]
+        };
+
+        let currentTasks = [];
+        let currentTaskIndex = 0;
+
+        function selectGrade(grade) {
+            currentTasks = tasksByGrade[grade];
+            currentTaskIndex = 0;
+            renderTask();
+        }
+
+        function renderTask() {
+            if (currentTasks.length > 0 && currentTaskIndex < currentTasks.length) {
+                document.getElementById('task').innerText = currentTasks[currentTaskIndex].task;
+                document.getElementById('answer').value = '';
+            } else {
+                document.getElementById('task').innerText = "No more tasks available.";
+                document.getElementById('answer').style.display = 'none';
+                document.querySelector('.task-container button').style.display = 'none';
+            }
+        }
+
+        function submitAnswer() {
+            const answer = document.getElementById('answer').value.trim();
+            const correctAnswer = currentTasks[currentTaskIndex].answer.trim().toLowerCase();
+
+            if (answer.toLowerCase() === correctAnswer) {
+                alert('Correct answer!');
+                currentTaskIndex++;
+                renderTask();
+            } else {
+                alert('Wrong answer. Try again!');
+            }
+        }
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('aboutUsModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('aboutUsModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
